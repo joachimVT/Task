@@ -12,5 +12,11 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('pages.home');
 });
+
+Route::get('/reservation', function() {
+	return view('pages.reservation');
+});
+
+// Route::resource('reservation', '\App\Http\Controllers\Auth\AuthController');
