@@ -11,12 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('pages.home');
-});
+Route::get('reservation/entries', ['uses' => '\App\Http\Controllers\ReservationController@entries', 'as' => 'reservation.entries']);
 
-Route::get('/reservation', function() {
-	return view('pages.reservation');
-});
-
-// Route::resource('reservation', '\App\Http\Controllers\Auth\AuthController');
+Route::resource('reservation', '\App\Http\Controllers\ReservationController', [
+    'names' => [
+        'index' => 'reservation.index',
+        'create' => 'reservation.create',
+        'store' => 'reservation.store'
+    ]
+]);

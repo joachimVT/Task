@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'url' => 'http://taks.app',
+    'url' => 'http://reservation.app',
 
     /*
     |--------------------------------------------------------------------------
@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'nl',
 
     /*
     |--------------------------------------------------------------------------
@@ -149,6 +149,7 @@ return [
          * Custom Service Providers
          */
         Collective\Html\HtmlServiceProvider::class,
+        Laracasts\Flash\FlashServiceProvider::class,
 
     ],
 

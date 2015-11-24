@@ -5,53 +5,52 @@
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
 			<div class="panel panel-default">
-				<div class="panel-heading">Register</div>
+				<div class="panel-heading">{{ trans('reservation.reservation_title') }}</div>
 				<div class="panel-body">
 					@if (count($errors) > 0)
 						<div class="alert alert-danger">
-							<strong>Whoops!</strong> There were some problems with your input.<br><br>
-							<ul>
-								@foreach ($errors->all() as $error)
-									<li>{{ $error }}</li>
-								@endforeach
-							</ul>
+							<strong>Sorry!</strong> {{ trans('reservation.input_error') }}.<br><br>
 						</div>
 					@endif
 
 					{!! Form::open(['class' => 'form-horizontal']) !!}
 
-						<div class="form-group">
-							<label class="col-md-4 control-label">Name</label>
+						<div class='form-group {{ $errors->has("last_name") ? ' has-error' : '' }}'>
+							<label class="col-md-4 control-label" for="last_name">{{ trans('reservation.last_name') }}</label>
 							<div class="col-md-6">
-								<input type="text" class="form-control" name="name" value="{{ old('name') }}">
+								{!! Form::text("last_name", old("last_name"), ['class' => "form-control",'id'=> 'last_name']) !!}
 							</div>
+							{!! $errors->first("last_name", '<span class="help-block">:message</span>','achternaam') !!}
 						</div>
 
-						<div class="form-group">
-							<label class="col-md-4 control-label">E-Mail Address</label>
+						<div class='form-group {{ $errors->has("first_name") ? ' has-error' : '' }}'>
+							<label class="col-md-4 control-label" for="first_name">{{ trans('reservation.first_name') }}</label>
 							<div class="col-md-6">
-								<input type="email" class="form-control" name="email" value="{{ old('email') }}">
+								{!! Form::text("first_name", old("first_name"), ['class' => "form-control",'id'=> 'first_name']) !!}
 							</div>
+							{!! $errors->first("first_name", '<span class="help-block">:message</span>') !!}
 						</div>
 
-						<div class="form-group">
-							<label class="col-md-4 control-label">Password</label>
+						<div class='form-group {{ $errors->has("email") ? ' has-error' : '' }}'>
+							<label class="col-md-4 control-label" for="email">{{ trans('reservation.email') }}</label>
 							<div class="col-md-6">
-								<input type="password" class="form-control" name="password">
+								{!! Form::email("email", old("email"), ['class' => "form-control",'id'=> 'email']) !!}
 							</div>
+							{!! $errors->first("email", '<span class="help-block">:message</span>') !!}
 						</div>
 
-						<div class="form-group">
-							<label class="col-md-4 control-label">Confirm Password</label>
+						<div class='form-group {{ $errors->has("message") ? ' has-error' : '' }}'>
+							<label class="col-md-4 control-label" for="message">{{ trans('reservation.message') }}</label>
 							<div class="col-md-6">
-								<input type="password" class="form-control" name="password_confirmation">
+								{!! Form::textarea("message", old("message"), ['class' => "form-control",'id'=> 'message']) !!}
 							</div>
+							{!! $errors->first("message", '<span class="help-block">:message</span>') !!}
 						</div>
 
 						<div class="form-group">
 							<div class="col-md-6 col-md-offset-4">
 								<button type="submit" class="btn btn-primary">
-									Register
+									Versturen
 								</button>
 							</div>
 						</div>

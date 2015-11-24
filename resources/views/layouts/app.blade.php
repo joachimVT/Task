@@ -25,10 +25,19 @@
 		<div class="container">
 			<nav class="blog-nav">
 				<a class="blog-nav-item active" href="#">Home</a>
-				<a class="blog-nav-item" href="/reservation">Reservation</a>
+				<a class="blog-nav-item" href="/reservation">Reservatie</a>
+                <a class="blog-nav-item" href="/reservation/entries">Reservatie ingaven</a>
 			</nav>
 		</div>
 	</div>
+
+    @if (Session::has('flash_notification.message'))
+        <div class="alert alert-{{ Session::get('flash_notification.level') }}">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+
+            {{ Session::get('flash_notification.message') }}
+        </div>
+    @endif
 
 	@yield('content')
 
