@@ -124,15 +124,15 @@ class ReservationController extends Controller
 
     private function insertInCsv(Reservation $reservation)
     {
-        //dd($reservation->toArray());
-        $writer = Writer::createFromFileObject(new \SplTempFileObject());
+        $file = new \SplFileObject("data.csv","a");
+        $writer = Writer::createFromFileObject($file);
         $writer->setDelimiter(";"); //the delimiter will be the tab character
         $writer->setNewline("\r\n"); //use windows line endings for compatibility with some csv libraries
         $writer->setEncodingFrom("utf-8");
 
         $headers = ["Naam" , "Voornaam", "E-mail", "Bericht","Toegevoegd op"];
         $writer->insertOne($headers);
-        $writer->insertAll($reservation->getAttributes());
+        $writer->insertAll($reservation->toArray());
         $writer->output('data.csv');
         //dd($writer);
     }
