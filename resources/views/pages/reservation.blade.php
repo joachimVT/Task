@@ -19,7 +19,7 @@
 						<div class='form-group {{ $errors->has("last_name") ? ' has-error' : '' }}'>
 							<label class="col-md-4 control-label" for="last_name">{{ trans('reservation.last_name') }}</label>
 							<div class="col-md-6">
-								{!! Form::text("last_name", old("last_name"), ['class' => "form-control",'id'=> 'last_name']) !!}
+								{!! Form::text("last_name", old("last_name"), ['required','class' => "form-control",'id'=> 'last_name']) !!}
 							</div>
 							{!! $errors->first("last_name", '<span class="help-block">:message</span>','achternaam') !!}
 						</div>
@@ -27,7 +27,7 @@
 						<div class='form-group {{ $errors->has("first_name") ? ' has-error' : '' }}'>
 							<label class="col-md-4 control-label" for="first_name">{{ trans('reservation.first_name') }}</label>
 							<div class="col-md-6">
-								{!! Form::text("first_name", old("first_name"), ['class' => "form-control",'id'=> 'first_name']) !!}
+								{!! Form::text("first_name", old("first_name"), ['required','class' => "form-control",'id'=> 'first_name']) !!}
 							</div>
 							{!! $errors->first("first_name", '<span class="help-block">:message</span>') !!}
 						</div>
@@ -35,7 +35,7 @@
 						<div class='form-group {{ $errors->has("email") ? ' has-error' : '' }}'>
 							<label class="col-md-4 control-label" for="email">{{ trans('reservation.email') }}</label>
 							<div class="col-md-6">
-								{!! Form::email("email", old("email"), ['class' => "form-control",'id'=> 'email']) !!}
+								{!! Form::email("email", old("email"), ['required','class' => "form-control",'id'=> 'email']) !!}
 							</div>
 							{!! $errors->first("email", '<span class="help-block">:message</span>') !!}
 						</div>
@@ -43,7 +43,7 @@
 						<div class='form-group {{ $errors->has("message") ? ' has-error' : '' }}'>
 							<label class="col-md-4 control-label" for="message">{{ trans('reservation.message') }}</label>
 							<div class="col-md-6">
-								{!! Form::textarea("message", old("message"), ['class' => "form-control",'id'=> 'message']) !!}
+								{!! Form::textarea("message", old("message"), ['required','class' => "form-control",'id'=> 'message']) !!}
 							</div>
 							{!! $errors->first("message", '<span class="help-block">:message</span>') !!}
 						</div>
