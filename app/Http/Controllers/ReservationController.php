@@ -7,13 +7,12 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Redirect;
 use Laracasts\Flash\Flash;
 use League\Csv\Writer;
+use Config, File;
 
 use App\Http\Requests;
 use App\Http\Requests\CreateReservationRequest;
 use App\Http\Controllers\Controller;
 use App\Entities\Reservation;
-
-
 
 class ReservationController extends Controller
 {
@@ -62,7 +61,7 @@ class ReservationController extends Controller
 
         Flash::success(trans('reservation.reservation_created'));
 
-        //Return Redirect::route('reservation.index');
+        return Redirect::route('reservation.index');
     }
 
     /**
@@ -122,18 +121,49 @@ class ReservationController extends Controller
         //return View::make();
     }
 
+    /**
+     * Create new csv if needed
+     * and add request data to csv
+     *
+     * @param  Reservation $reservation
+     * @return void
+     */
     private function insertInCsv(Reservation $reservation)
     {
-        $file = new \SplFileObject("data.csv","a");
-        $writer = Writer::createFromFileObject($file);
-        $writer->setDelimiter(";"); //the delimiter will be the tab character
-        $writer->setNewline("\r\n"); //use windows line endings for compatibility with some csv libraries
+        $writer = Writer::createFromPath(Config::get('reservation.csv_path'), 'a');
+        $writer->setDelimiter(";");
         $writer->setEncodingFrom("utf-8");
 
-        $headers = ["Naam" , "Voornaam", "E-mail", "Bericht","Toegevoegd op"];
-        $writer->insertOne($headers);
-        $writer->insertAll($reservation->toArray());
-        $writer->output('data.csv');
-        //dd($writer);
+        if ( ! $this->checkIfCsvExists()) {
+            // Only add header to first line
+            $headers = ["Naam" , "Voornaam", "E-mail", "Bericht","Toegevoegd op"];
+            $writer->insertOne($headers);
+        }
+
+        $writer->insertOne(array(
+            $reservation->first_name,
+            $reservation->last_name,
+            $reservation->email,
+            $reservation->message,
+            $reservation->created_at->format('d/m/Y h:i')
+        ));
+    }
+
+    /**
+     * Check if file exists
+     * if not create new data.csv file
+     *
+     * @return boolean
+     */
+    private function checkIfCsvExists()
+    {
+        $filePath = Config::get('reservation.csv_path');
+
+        if( ! File::exists($filePath)) {
+            $file = new \SplFileObject($filePath,"a");
+            return false;
+        }
+
+        return true;
     }
 }

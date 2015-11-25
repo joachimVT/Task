@@ -1,6 +1,6 @@
 {
     "name": "laravel/laravel",
-    "description": "Task project",
+    "description": "Reservation project",
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "type": "project",
