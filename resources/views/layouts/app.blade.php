@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html class="bg-black">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>
-        Task
-    </title>
-    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Reservation app</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Fonts -->
 	<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
@@ -24,9 +23,9 @@
 	<div class="blog-masthead">
 		<div class="container">
 			<nav class="blog-nav">
-				<a class="blog-nav-item active" href="#">Home</a>
-				<a class="blog-nav-item" href="/reservation">Reservatie</a>
-                <a class="blog-nav-item" href="/reservation/entries">Reservatie ingaven</a>
+				<a class="blog-nav-item {!! (Request::is('/') ? 'active' : '') !!}" href="/">Home</a>
+				<a class="blog-nav-item {!! (Request::is('reservation') ? 'active' : '') !!}" href="/reservation">Reservatie</a>
+                <a class="blog-nav-item {!! (Request::is('reservation/entries') ? 'active' : '') !!}" href="/reservation/entries">Reservatie overzicht</a>
 			</nav>
 		</div>
 	</div>

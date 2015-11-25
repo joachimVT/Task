@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Redirect;
 use Laracasts\Flash\Flash;
 use League\Csv\Writer;
-use Config, File;
+use League\Csv\Reader;
+use Config, File, Storage, Response;
 
 use App\Http\Requests;
 use App\Http\Requests\CreateReservationRequest;
@@ -62,8 +63,16 @@ class ReservationController extends Controller
      */
     public function entries()
     {
-        dd($this->reservation->all());
-        //return View::make();
+        $filePath = Config::get('reservation.csv_path');
+
+        if ( File::exists($filePath)) {
+            $csv = Reader::createFromPath($filePath);
+            $csv->setDelimiter(';');
+            $headers = $csv->fetchOne(0);
+            $entries = $csv->setOffset(1)->fetchAll();
+        }
+
+        return View::make('pages.entries', compact('headers','entries'));
     }
 
     /**
@@ -90,7 +99,7 @@ class ReservationController extends Controller
             $reservation->last_name,
             $reservation->email,
             $reservation->message,
-            $reservation->created_at->format('d/m/Y h:i')
+            $reservation->created_at->format('d/m/Y H:i')
         ));
     }
 
@@ -110,5 +119,36 @@ class ReservationController extends Controller
         }
 
         return true;
+    }
+
+    /**
+     * Delete csv file
+     *
+     * @return boolean
+     */
+    public function removeCsv()
+    {
+        $filePath = Config::get('reservation.csv_path');
+
+        File::delete($filePath);
+        Flash::success(trans('reservation.entries_removed'));
+
+        return Redirect::route('reservation.entries');
+    }
+
+    /**
+     * Download csv file
+     *
+     * @return boolean
+     */
+    public function downloadCsv()
+    {
+        $filePath = Config::get('reservation.csv_path');
+
+        if (File::exists($filePath)) {
+            return response()->download($filePath,"data.csv");
+        }
+
+        return Redirect::route('reservation.entries');
     }
 }

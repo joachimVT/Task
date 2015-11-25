@@ -1,5 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-	<h1>Reservation Task</h1>
+	<div class="container">
+		<div class="jumbotron">
+			<h1>Reservation app</h1>
+			<p>
+				Praktische proef
+			</p>
+		</div>
+	</div>
 @stop
